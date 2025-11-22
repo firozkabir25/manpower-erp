@@ -26,7 +26,7 @@
             <tr>
                 <td>{{ $item->id }}</td>
                 <td>{{ $item->name }}</td>
-                <td>{{ $item->user_id }}</td>
+                <td>{{ optional($item->user)->name ?? $item->user_id }}</td>
                 <td>{{ $item->sort }}</td>
                 <td>
                     <a href="{{ route('status.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>

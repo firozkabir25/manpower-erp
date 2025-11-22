@@ -10,7 +10,7 @@ class StatusController extends Controller
 {
     public function index()
     {
-        $data = Status::orderBy('sort')->get();
+        $data = Status::with('user')->orderBy('sort')->get();
         return view('admin.master_info.status.index', compact('data'));
     }
 
@@ -28,7 +28,7 @@ class StatusController extends Controller
 
         Status::create([
             'name' => $request->name,
-            'user_id' => auth()->id() ?? 'system',
+            'user_id' => auth()->id() ?? '',
             'sort' => $request->sort ?? 0
         ]);
 

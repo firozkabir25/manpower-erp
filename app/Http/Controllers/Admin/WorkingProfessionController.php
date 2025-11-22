@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\WorkingProfession;
 
@@ -21,12 +22,15 @@ class WorkingProfessionController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|max:60',
-            'user_id' => 'required|max:60',
         ]);
 
-        WorkingProfession::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id() ?? 'system';
+
+        WorkingProfession::create($data);
 
         return redirect()->route('working-professions.index')
                          ->with('success', 'Created Successfully');
@@ -42,11 +46,12 @@ class WorkingProfessionController extends Controller
     {
         $request->validate([
             'name' => 'required|max:60',
-            'user_id' => 'required|max:60',
         ]);
 
         $data = WorkingProfession::findOrFail($id);
-        $data->update($request->all());
+        $update = $request->all();
+        $update['user_id'] = auth()->id() ?? $data->user_id ?? 'system';
+        $data->update($update);
 
         return redirect()->route('working-professions.index')
                          ->with('success', 'Updated Successfully');

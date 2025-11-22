@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\VisaProfession;
 
@@ -10,7 +11,7 @@ class VisaProfessionController extends Controller
 {
     public function index()
     {
-        $data = VisaProfession::latest()->get();
+        $data = VisaProfession::with('user')->latest()->get();
         return view('admin.master_info.visaprofession.index', compact('data'));
     }
 
@@ -24,10 +25,12 @@ class VisaProfessionController extends Controller
         $request->validate([
             'name' => 'required|max:60',
             'namearabic' => 'required|max:60',
-            'user_id' => 'required|max:60'
         ]);
 
-        VisaProfession::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id() ?? 'system';
+
+        VisaProfession::create($data);
 
         return redirect()->route('visa-profession.index')->with('success', 'Created Successfully');
     }
@@ -43,11 +46,12 @@ class VisaProfessionController extends Controller
         $request->validate([
             'name' => 'required|max:60',
             'namearabic' => 'required|max:60',
-            'user_id' => 'required|max:60'
         ]);
 
         $data = VisaProfession::findOrFail($id);
-        $data->update($request->all());
+        $update = $request->all();
+        $update['user_id'] = auth()->id() ?? $data->user_id ?? 'system';
+        $data->update($update);
 
         return redirect()->route('visa-profession.index')->with('success', 'Updated Successfully');
     }

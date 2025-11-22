@@ -24,7 +24,7 @@
             <tr>
                 <td>{{ $item->id }}</td>
                 <td>{{ $item->name }}</td>
-                <td>{{ $item->user_id }}</td>
+                <td>{{ optional($item->user)->name ?? $item->user_id }}</td>
                 <td>
                     <a href="{{ route('expenses.toggle.active', $item->id) }}"
                        class="btn btn-sm {{ $item->active == '1' ? 'btn-success' : 'btn-secondary' }}">

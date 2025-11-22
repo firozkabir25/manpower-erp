@@ -18,8 +18,9 @@
         </div>
 
         <div class="mb-3">
-            <label>User *</label>
-            <input type="text" name="user_id" class="form-control" required>
+            <input type="hidden" name="user_id" value="{{ old('user_id', auth()->id()) }}">
+            <label>User</label>
+            <input type="text" class="form-control" value="{{ auth()->user()->name ?? auth()->id() }}" readonly>
         </div>
 
         <button class="btn btn-primary">Save</button>

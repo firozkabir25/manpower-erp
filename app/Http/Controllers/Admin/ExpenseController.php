@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Expense;
 
@@ -10,7 +11,7 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        $data = Expense::orderBy('sort', 'asc')->get();
+        $data = Expense::with('user')->orderBy('sort', 'asc')->get();
         return view('admin.master_info.expenses.index', compact('data'));
     }
 
@@ -23,12 +24,13 @@ class ExpenseController extends Controller
     {
         $request->validate([
             'name'    => 'required|max:60',
-            'user_id' => 'required|max:60',
-            'active'  => 'required|in:1,0',
             'sort'    => 'required|numeric',
         ]);
 
-        Expense::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id() ?? '';
+
+        Expense::create($data);
 
         return redirect()->route('expenses.index')->with('success', 'Created Successfully');
     }
@@ -43,13 +45,13 @@ class ExpenseController extends Controller
     {
         $request->validate([
             'name'    => 'required|max:60',
-            'user_id' => 'required|max:60',
-            'active'  => 'required|in:1,0',
             'sort'    => 'required|numeric',
         ]);
 
         $data = Expense::findOrFail($id);
-        $data->update($request->all());
+        $update = $request->all();
+        $update['user_id'] = auth()->id() ?? $data->user_id ?? '';
+        $data->update($update);
 
         return redirect()->route('expenses.index')->with('success', 'Updated Successfully');
     }

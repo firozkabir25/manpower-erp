@@ -20,13 +20,13 @@
     </thead>
     <tbody>
     @foreach($agents as $agent)
-        <tr>
-            <td>{{ $loop->iteration }}</td>
-            <td>{{ $agent->name }}</td>
-            <td>{{ $agent->country->name ?? '--' }}</td>
-            <td>{{ $agent->email }}</td>
-            <td>{{ $agent->phone }}</td>
-            <td>{{ $agent->ledger_id }}</td>
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $agent->name }}</td>
+                <td>{{ optional($agent->country)->name ?? '--' }}</td>
+                <td>{{ $agent->email }}</td>
+                <td>{{ $agent->phone }}</td>
+                <td>{{ optional($agent->ledger)->ledger ?? $agent->ledger_id }}</td>
             <td>
                 <a href="{{ route('foreign-agents.edit', $agent->id) }}" class="btn btn-primary btn-sm">Edit</a>
                 <form action="{{ route('foreign-agents.destroy', $agent->id) }}" class="d-inline" method="POST">

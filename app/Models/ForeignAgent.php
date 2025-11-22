@@ -28,4 +28,9 @@ class ForeignAgent extends Model
     {
         return $this->belongsTo(AccLedger::class, 'ledger_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

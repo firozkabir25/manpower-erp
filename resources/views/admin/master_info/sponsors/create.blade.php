@@ -27,9 +27,9 @@
             </div>
 
             <div class="form-group">
-                <label>User *</label>
-                <input type="text" name="user_id" value="{{ old('user_id') }}" class="form-control" required>
-                @error('user_id') <small class="text-danger">{{ $message }}</small> @enderror
+                <input type="hidden" name="user_id" value="{{ old('user_id', auth()->id()) }}">
+                <label>User</label>
+                <input type="text" class="form-control" value="{{ auth()->user()->name ?? auth()->id() }}" readonly>
             </div>
 
             <div class="form-group">

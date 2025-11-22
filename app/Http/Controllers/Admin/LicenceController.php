@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Licence;
 use App\Models\User;
@@ -30,11 +31,14 @@ class LicenceController extends Controller
         $request->validate([
             'licence' => 'required|unique:licences,licence',
             'rlno' => 'required|unique:licences,rlno',
-            'user_id' => 'required|string|max:60',
+            'user_id' => 'nullable|exists:users,id',
             'address' => 'nullable|string|max:200',
         ]);
 
-        Licence::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = $data['user_id'] ?? auth()->id();
+
+        Licence::create($data);
 
         return redirect()->route('licence.index')->with('success', 'Licence created successfully!');
     }
@@ -56,11 +60,14 @@ class LicenceController extends Controller
         $request->validate([
             'licence' => "required|unique:licences,licence,{$id}",
             'rlno' => "required|unique:licences,rlno,{$id}",
-            'user_id' => 'required|integer',
+            'user_id' => 'nullable|exists:users,id',
             'address' => 'nullable|string|max:200',
         ]);
 
-        $licence->update($request->all());
+        $data = $request->all();
+        $data['user_id'] = $data['user_id'] ?? auth()->id();
+
+        $licence->update($data);
         return redirect()->route('licence.index')->with('success', 'Licence updated successfully!');
     }
 

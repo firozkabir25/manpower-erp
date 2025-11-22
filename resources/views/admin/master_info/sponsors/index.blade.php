@@ -32,7 +32,7 @@
                     <td>{{ $row->sponsor_id }}</td>
                     <td>{{ $row->name }}</td>
                     <td>{{ $row->name_arabic }}</td>
-                    <td>{{ $row->user_id }}</td>
+                    <td>{{ optional($row->user)->name ?? $row->user_id }}</td>
                     <td>{{ $row->address }}</td>
                     <td>
                         <a href="{{ route('sponsors.edit', $row->id) }}" class="btn btn-warning btn-sm">Edit</a>

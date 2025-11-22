@@ -19,8 +19,9 @@
         </div>
 
         <div class="mb-3">
-            <label>User *</label>
-            <input type="text" name="user_id" value="{{ $data->user_id }}" class="form-control" required>
+            <input type="hidden" name="user_id" value="{{ old('user_id', $data->user_id ?? auth()->id()) }}">
+            <label>User</label>
+            <input type="text" class="form-control" value="{{ optional($data->user)->name ?? $data->user_id }}" readonly>
         </div>
 
         <button class="btn btn-success">Update</button>

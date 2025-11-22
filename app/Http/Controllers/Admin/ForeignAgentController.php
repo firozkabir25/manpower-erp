@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\ForeignAgent;
 use App\Models\Country;
@@ -11,7 +12,7 @@ class ForeignAgentController extends Controller
 {
     public function index()
     {
-        $agents = ForeignAgent::with('country')->latest()->paginate(20);
+        $agents = ForeignAgent::with(['country','ledger','user'])->latest()->paginate(20);
         return view('admin.master_info.foreign_agents.index', compact('agents'));
     }
 
@@ -28,12 +29,14 @@ class ForeignAgentController extends Controller
             'email'     => 'required|email|max:30',
             'phone'     => 'required|max:20',
             'address'   => 'nullable|max:300',
-            'user_id'   => 'required|max:60',
-            'country_id'=> 'nullable|integer',
-            'ledger_id' => 'nullable|integer',
+            'country_id'=> 'nullable|exists:countries,id',
+            'ledger_id' => 'nullable|exists:acc_ledgers,id',
         ]);
 
-        ForeignAgent::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id() ? (string)auth()->id() : ($data['user_id'] ?? 'system');
+
+        ForeignAgent::create($data);
 
         return redirect()->route('foreign-agents.index')
             ->with('success', 'Foreign Agent created successfully.');
@@ -55,12 +58,14 @@ class ForeignAgentController extends Controller
             'email'     => 'required|email|max:30',
             'phone'     => 'required|max:20',
             'address'   => 'nullable|max:300',
-            'user_id'   => 'required|max:60',
-            'country_id'=> 'nullable|integer',
-            'ledger_id' => 'nullable|integer',
+            'country_id'=> 'nullable|exists:countries,id',
+            'ledger_id' => 'nullable|exists:acc_ledgers,id',
         ]);
 
-        $foreign_agent->update($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id() ? (string)auth()->id() : ($data['user_id'] ?? $foreign_agent->user_id ?? 'system');
+
+        $foreign_agent->update($data);
 
         return redirect()->route('foreign-agents.index')
             ->with('success', 'Foreign Agent updated successfully.');

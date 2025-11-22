@@ -34,9 +34,9 @@
                     <td>{{ $agent->nid }}</td>
                     <td>{{ $agent->phone }}</td>
                     <td>{{ $agent->email }}</td>
-                    <td>{{ $agent->ledger->ledger ?? 'N/A' }}</td>
+                    <td>{{ $agent?->ledger?->ledger ?? 'N/A' }}</td>
                     <td>{{ $agent->code }}</td>
-                    <td>{{ $agent->user->name ?? 'N/A' }}</td>
+                    <td>{{ $agent?->user?->name ?? 'N/A' }}</td>
 
                     <td>
                         <a href="{{ route('localagent.edit', $agent->id) }}"

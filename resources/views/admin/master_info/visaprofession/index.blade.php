@@ -22,7 +22,7 @@
                 <td>{{ $item->id }}</td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->namearabic }}</td>
-                <td>{{ $item->user_id }}</td>
+                <td>{{ optional($item->user)->name ?? $item->user_id }}</td>
                 <td>
                     <a href="{{ route('visa-profession.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
 
