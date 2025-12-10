@@ -66,4 +66,9 @@ class User extends Authenticatable
         return $this->hasMany(LocalAgent::class);
     }
 
+    public function workers()
+    {
+        return $this->hasMany(Worker::class);
+    }
+
 }

@@ -17,4 +17,9 @@ class WorkingProfession extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function workers()
+    {
+        return $this->hasMany(Worker::class);
+    }
 }

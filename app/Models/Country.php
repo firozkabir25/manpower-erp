@@ -31,4 +31,9 @@ class Country extends Model
     {
         return $this->hasMany(Currency::class);
     }
+
+    public function workers()
+    {
+        return $this->hasMany(Worker::class);
+    }
 }

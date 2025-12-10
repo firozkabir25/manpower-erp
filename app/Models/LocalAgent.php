@@ -29,4 +29,10 @@ class LocalAgent extends Model
     {
         return $this->belongsTo(AccLedger::class);
     }
+
+    public function workers()
+    {
+        return $this->hasMany(Worker::class);
+    }
+
 }

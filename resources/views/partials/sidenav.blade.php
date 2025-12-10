@@ -3,6 +3,7 @@
                     request()->routeIs('visa-profession.*') || request()->routeIs('working-professions.*') || request()->routeIs('expenses.*') || 
                     request()->routeIs('status.*') || request()->routeIs('country.*') || request()->routeIs('company.*') || request()->routeIs('airline.*') ||
                     request()->routeIs('currency.*') || request()->routeIs('localagent.*');
+    $processingActive = request()->routeIs('passport-entries.*') || request()->routeIs('visa-blocks.*');
 @endphp
 
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
@@ -104,8 +105,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link">
+                <li class="nav-item {{ $processingActive ? 'menu-open' : '' }}">
+                    <a href="javascript:void(0)" class="nav-link {{ $processingActive ? 'active' : '' }}">
                         <i class="nav-icon bi bi-info-circle"></i>
                         <p>
                             Processing
@@ -114,13 +115,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('passport-entries.index') }}" class="nav-link {{ request()->routeIs('passport-entries.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Passport Entry</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('visa-blocks.index')}}" class="nav-link {{ request()->routeIs('visa-blocks.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Visa Number</p>
                             </a>
