@@ -3,7 +3,7 @@
                     request()->routeIs('visa-profession.*') || request()->routeIs('working-professions.*') || request()->routeIs('expenses.*') || 
                     request()->routeIs('status.*') || request()->routeIs('country.*') || request()->routeIs('company.*') || request()->routeIs('airline.*') ||
                     request()->routeIs('currency.*') || request()->routeIs('localagent.*');
-    $processingActive = request()->routeIs('passport-entries.*') || request()->routeIs('visa-blocks.*');
+    $processingActive = request()->routeIs('passport-entries.*') || request()->routeIs('visa-blocks.*') || request()->routeIs('projects.*') || request()->routeIs('workers.*');
 @endphp
 
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
@@ -127,13 +127,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('projects.index')}}" class="nav-link {{ request()->routeIs('projects.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Project</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('workers.index') }}" class="nav-link {{ request()->routeIs('workers.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Worker / Candidate</p>
                             </a>

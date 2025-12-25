@@ -3,11 +3,12 @@
 namespace App\Models\Processing;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\country;
+use App\Models\Country;
 use App\Models\WorkingProfession;
 use App\Models\LocalAgent;
 use App\Models\District;
 use App\Models\User;
+use App\Models\Processing\Project;
 
 class Worker extends Model
 {
@@ -101,10 +102,10 @@ class Worker extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function project()
-    // {
-    //     return $this->belongsTo(Project::class);
-    // }
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 
     public function district()
     {
