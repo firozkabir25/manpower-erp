@@ -240,3 +240,13 @@
       const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
       sparkline3.render();
     </script>
+
+    <script>
+function previewImage(input, target) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => document.getElementById(target).src = e.target.result;
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>

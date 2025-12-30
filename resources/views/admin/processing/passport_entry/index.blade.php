@@ -58,7 +58,7 @@
                             <td>{{ $item->passport_expire_date }}</td>
                             <td>{{ $item->birth_place }}</td>
                             <td>{{ $item->country->name }}</td>
-                            <td>{{ $item->workingProfession->name }}</td>
+                            <td>{{ $item->profession->name }}</td>
                             <td>{{ $item->grade }}</td>
                             <td>{{ $item->basic_salary }}</td>
                             <td>{{ $item->education }}</td>

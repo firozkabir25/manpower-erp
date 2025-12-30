@@ -12,7 +12,7 @@ class WorkerController extends Controller
 {
     public function index()
     {
-        $workers = Worker::with(['country', 'workingProfession', 'localAgent', 'user', 'district', 'project'])->latest()->paginate(20);
+        $workers = Worker::with(['country', 'profession', 'localAgent', 'user', 'district', 'project'])->latest()->paginate(20);
 
         return view('admin.processing.workers.index', compact('workers'));
     }
@@ -21,7 +21,7 @@ class WorkerController extends Controller
     {
         $projects = Project::all();
         $countries = Country::all();
-        $professions = WorkingProfession::all();
+        $professions = Profession::all();
         $agents = LocalAgent::all();
         $districts = District::all();
 
@@ -48,7 +48,7 @@ class WorkerController extends Controller
 
     public function show(Worker $worker)
     {
-        $worker->load(['country', 'workingProfession', 'localAgent', 'user', 'district', 'project']);
+        $worker->load(['country', 'profession', 'localAgent', 'user', 'district', 'project']);
 
         return view('admin.processing.workers.show', compact('worker'));
     }
@@ -57,7 +57,7 @@ class WorkerController extends Controller
     {
         $projects = Project::all();
         $countries = Country::all();
-        $professions = WorkingProfession::all();
+        $professions = Profession::all();
         $agents = LocalAgent::all();
         $districts = District::all();
 

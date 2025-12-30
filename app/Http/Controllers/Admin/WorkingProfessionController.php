@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\WorkingProfession;
+use App\Models\Profession;
 
 class WorkingProfessionController extends Controller
 {
     public function index()
     {
-        $data = WorkingProfession::latest()->get();
+        $data = Profession::latest()->get();
         return view('admin.master_info.working_professions.index', compact('data'));
     }
 
@@ -30,7 +30,7 @@ class WorkingProfessionController extends Controller
         $data = $request->all();
         $data['user_id'] = auth()->id() ?? 'system';
 
-        WorkingProfession::create($data);
+        Profession::create($data);
 
         return redirect()->route('working-professions.index')
                          ->with('success', 'Created Successfully');
@@ -38,7 +38,7 @@ class WorkingProfessionController extends Controller
 
     public function edit($id)
     {
-        $data = WorkingProfession::findOrFail($id);
+        $data = Profession::findOrFail($id);
         return view('admin.master_info.working_professions.edit', compact('data'));
     }
 
@@ -48,7 +48,7 @@ class WorkingProfessionController extends Controller
             'name' => 'required|max:60',
         ]);
 
-        $data = WorkingProfession::findOrFail($id);
+        $data = Profession::findOrFail($id);
         $update = $request->all();
         $update['user_id'] = auth()->id() ?? $data->user_id ?? 'system';
         $data->update($update);
@@ -59,7 +59,7 @@ class WorkingProfessionController extends Controller
 
     public function destroy($id)
     {
-        WorkingProfession::findOrFail($id)->delete();
+        Profession::findOrFail($id)->delete();
         return redirect()->route('working-professions.index')
                          ->with('success', 'Deleted Successfully');
     }

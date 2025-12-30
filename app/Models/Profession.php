@@ -17,6 +17,11 @@ class Profession extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function workers()
+    {
+        return $this->hasMany(Worker::class);
+    }
+
     public function salesPrices()
     {
         return $this->hasMany(SalesPrice::class);

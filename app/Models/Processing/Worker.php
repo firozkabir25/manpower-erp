@@ -4,7 +4,7 @@ namespace App\Models\Processing;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Country;
-use App\Models\WorkingProfession;
+use App\Models\Profession;
 use App\Models\LocalAgent;
 use App\Models\District;
 use App\Models\User;
@@ -87,9 +87,9 @@ class Worker extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function workingProfession()
+    public function profession()
     {
-        return $this->belongsTo(WorkingProfession::class);
+        return $this->belongsTo(Profession::class, 'working_profession_id', 'id');
     }
 
     public function localAgent()

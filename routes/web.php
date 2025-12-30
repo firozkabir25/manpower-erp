@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{DashboardController, LicenceController, ForeignAgentController, SponsorController, VisaProfessionController,
     WorkingProfessionController, ExpenseController, StatusController, CountryController, CompanyController, AirlineController, CurrencyController,
     LocalAgentController};
-use App\Http\Controllers\Admin\Processing\{PassportEntryController, VisaBlockController, ProjectController, WorkerController};
+use App\Http\Controllers\Admin\Processing\{PassportEntryController, VisaBlockController, ProjectController, WorkerController, ImageController};
 
 Route::get('/', function () {
     return view('auth.login');
@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('visa-blocks', VisaBlockController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('workers', WorkerController::class);
+    Route::resource('images', ImageController::class);
 
 
 

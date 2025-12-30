@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('acc_cost_centers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255);
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->timestamps();
+        if (!Schema::hasTable('acc_cost_centers')) {
+            Schema::create('acc_cost_centers', function (Blueprint $table) {
+                $table->id();
+                $table->string('name', 255);
+                $table->unsignedBigInteger('user_id')->nullable();
+                $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
-        });
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            });
+        }
     }
 
     /**

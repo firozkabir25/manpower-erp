@@ -3,7 +3,7 @@
                     request()->routeIs('visa-profession.*') || request()->routeIs('working-professions.*') || request()->routeIs('expenses.*') || 
                     request()->routeIs('status.*') || request()->routeIs('country.*') || request()->routeIs('company.*') || request()->routeIs('airline.*') ||
                     request()->routeIs('currency.*') || request()->routeIs('localagent.*');
-    $processingActive = request()->routeIs('passport-entries.*') || request()->routeIs('visa-blocks.*') || request()->routeIs('projects.*') || request()->routeIs('workers.*');
+    $processingActive = request()->routeIs('passport-entries.*') || request()->routeIs('visa-blocks.*') || request()->routeIs('projects.*') || request()->routeIs('workers.*') || request()->routeIs('images.*');
 @endphp
 
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
@@ -139,7 +139,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('images.index')}}" class="nav-link {{ request()->routeIs('images.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Insert Image</p>
                             </a>

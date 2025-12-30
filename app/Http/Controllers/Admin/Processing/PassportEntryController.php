@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Processing\Worker;
 use App\Models\Country;
-use App\Models\WorkingProfession;
+use App\Models\Profession;
 use App\Models\LocalAgent;
 use App\Models\District;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,7 @@ class PassportEntryController extends Controller
      */
     public function index()
     {
-        $applicants = Worker::with(['country', 'workingProfession', 'localAgent', 'district'])->latest()->paginate(20);
+        $applicants = Worker::with(['country', 'profession', 'localAgent', 'district'])->latest()->paginate(20);
         return view('admin.processing.passport_entry.index', compact('applicants'));
     }
 
@@ -29,7 +29,7 @@ class PassportEntryController extends Controller
     {
         return view('admin.processing.passport_entry.create', [
             'countries' => Country::all(),
-            'professions' => WorkingProfession::all(),
+            'professions' => Profession::all(),
             'agents' => LocalAgent::all(),
             'districts' => District::all(),
         ]);
@@ -85,7 +85,7 @@ class PassportEntryController extends Controller
         return view('admin.processing.passport_entry.edit', [
             'passportEntry' => $passportEntry,
             'countries' => Country::all(),
-            'professions' => WorkingProfession::all(),
+            'professions' => Profession::all(),
             'agents' => LocalAgent::all(),
             'districts' => District::all(),
         ]);

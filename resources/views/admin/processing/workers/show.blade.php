@@ -72,7 +72,7 @@
                     </tr>
                     <tr>
                         <th>Working Profession</th>
-                        <td>{{ $worker->workingProfession?->name }}</td>
+                        <td>{{ $worker->profession?->name }}</td>
                     </tr>
                     <tr>
                         <th>Grade</th>
