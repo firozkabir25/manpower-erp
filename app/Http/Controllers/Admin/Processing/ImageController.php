@@ -88,24 +88,88 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Image $image)
     {
-        //
+        return view('admin.processing.images.edit', compact('image'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Image $image)
     {
-        //
+        $request->validate([
+            'passport_no'  => 'required|string|max:150',
+            'project_code' => 'required|string|max:150',
+
+            'picture'           => 'nullable|image|max:2048',
+            'visa_copy'         => 'nullable|image|max:2048',
+            'passport_copy'     => 'nullable|image|max:2048',
+            'vaccine_card'      => 'nullable|image|max:2048',
+            'driving_license'   => 'nullable|image|max:2048',
+            'cirtificate_one'   => 'nullable|image|max:2048',
+            'cirtificate_two'   => 'nullable|image|max:2048',
+        ]);
+
+        $data = $request->only(['passport_no', 'project_code']);
+
+        // Optional: track who updated
+        $data['user_id'] = auth()->id();
+
+        foreach ([
+            'picture',
+            'visa_copy',
+            'passport_copy',
+            'vaccine_card',
+            'driving_license',
+            'cirtificate_one',
+            'cirtificate_two'
+        ] as $file) {
+
+            if ($request->hasFile($file)) {
+                // Upload new file
+                $data[$file] = $this->upload($request, $file);
+
+                // Optional: delete old file
+                if (!empty($image->$file) && file_exists(public_path($image->$file))) {
+                    unlink(public_path($image->$file));
+                }
+            }
+        }
+
+        $image->update($data);
+
+        return redirect()->route('images.index')->with('success', 'Images updated successfully');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Image $image)
     {
-        //
+        $files = [
+            'picture',
+            'visa_copy',
+            'passport_copy',
+            'vaccine_card',
+            'driving_license',
+            'cirtificate_one',
+            'cirtificate_two'
+        ];
+
+        foreach ($files as $file) {
+            if (!empty($image->$file) && file_exists(public_path($image->$file))) {
+                unlink(public_path($image->$file));
+            }
+        }
+
+        $image->delete();
+
+        return redirect()
+            ->route('images.index')
+            ->with('success', 'Images deleted successfully');
     }
+
 }
